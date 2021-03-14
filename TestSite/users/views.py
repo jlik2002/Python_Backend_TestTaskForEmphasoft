@@ -61,12 +61,39 @@ class Remove(RetrieveUpdateAPIView):
             id_for_remove = request.data.get('id')
             user_for_remove = User.objects.get(id=id_for_remove)
             serializer = UserSerializer(user_for_remove,data={'is_active':False},partial=True)
-            #serializer.object.is_active = False
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         except ObjectDoesNotExist:
             return Response({'error':'this id not found'}, status=status.HTTP_404_NOT_FOUND)
+
+class Active(RetrieveUpdateAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UserSerializer
+
+    def post(self, request,*args,**kwargs):
+        try:
+            id_for_remove = request.data.get('id')
+            user_for_remove = User.objects.get(id=id_for_remove)
+            serializer = UserSerializer(user_for_remove,data={'is_active':True},partial=True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except ObjectDoesNotExist:
+            return Response({'error':'this id not found'}, status=status.HTTP_404_NOT_FOUND)
+
+class Delete(RetrieveUpdateAPIView):
+    permission_classes = (IsAuthenticated,)
+    
+    def post(self, request,*args,**kwargs):
+        try:
+            id_for_delete = request.data.get('id')
+            user_for_delete = User.objects.get(id=id_for_delete)
+            user_for_delete.delete()
+            return Response({'status: OK, user delete'}, status=status.HTTP_200_OK)
+        except ObjectDoesNotExist:
+            return Response({'error':'this id not found'}, status=status.HTTP_404_NOT_FOUND)
+ 
 
 def HiPage(requests):
     return response.HttpResponse('Hello, test site for CRUD')

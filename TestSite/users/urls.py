@@ -10,6 +10,8 @@ urlpatterns = [
     path('authorization/',views.authenticate_user),
     path('get_me/',views.GetMe.as_view()),
     path('change/',views.Change.as_view()),
-    path('remove/',views.Remove.as_view())
+    path('remove/',views.Remove.as_view()),
+    path('active/',views.Active.as_view()),
+    path('delete/',views.Delete.as_view()),
 ]
 
