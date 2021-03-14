@@ -38,7 +38,7 @@ class User(AbstractBaseUser,PermissionsMixin):
     
     objects = UserManager()
     USERNAME_FIELD = 'login'
-    EMAIL_FIELD = ' email'
+    EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = ['firstname','lastname'] 
     def save(self, *args,**kwargs):
         super(User,self).save(*args,**kwargs)
